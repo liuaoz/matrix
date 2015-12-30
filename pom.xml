@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.matrix</groupId>
 	<artifactId>matrix</artifactId>
@@ -35,19 +36,19 @@
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
 			<version>1.10</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>bouncycastle</groupId>
 			<artifactId>bcprov-jdk15</artifactId>
 			<version>140</version>
 		</dependency>
-		
+
 
 		<!-- log -->
 		<dependency>
@@ -169,6 +170,18 @@
 	</dependencies>
 	<build>
 		<finalName>matrix</finalName>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>1.7</source>
+						<target>1.7</target>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 
 	<modules>
@@ -179,5 +192,5 @@
 		<module>matrix-entry</module>
 		<module>matrix-comm</module>
 		<module>matrix-test</module>
-  </modules>
+	</modules>
 </project>
