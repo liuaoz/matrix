@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<webapp>
+	<servlet>
+		<name>login</name>
+		<servlet-name>com.matrix.test.server.LoginServlet</servlet-name>
+	</servlet>
+
+	<mapping>
+		<name>login</name>
+		<url-pattern>/login</url-pattern>
+	</mapping>
+
+	<mapping>
+		<name>login</name>
+		<url-pattern>/log</url-pattern>
+	</mapping>
+
+</webapp> 

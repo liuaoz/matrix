@@ -1,0 +1,13 @@
+response header
+Server:
+Date:
+Content-Type:text/html;charset=GBK
+Content-Length:112
+
+
+content-type:
+	text/html;charset=GBK
+	text/plain;charset=GBK
+	application/octet-stream
+	
+	
