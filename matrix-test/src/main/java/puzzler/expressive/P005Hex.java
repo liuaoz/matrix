@@ -1,4 +1,4 @@
-package puzzler;
+package puzzler.expressive;
 
 /**
  * Puzzle 5:The Joy of Hex </br>

@@ -1,4 +1,4 @@
-package puzzler;
+package puzzler.expressive;
 
 /**
  * Puzzle 7 : Swap Meat

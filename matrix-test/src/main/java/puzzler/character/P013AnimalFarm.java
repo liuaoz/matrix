@@ -1,4 +1,4 @@
-package puzzler;
+package puzzler.character;
 
 /**
  * Puzzle 13: Animal Farm

@@ -1,4 +1,4 @@
-package puzzler;
+package puzzler.expressive;
 
 import java.math.BigDecimal;
 

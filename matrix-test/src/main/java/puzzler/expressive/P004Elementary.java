@@ -1,4 +1,4 @@
-package puzzler;
+package puzzler.expressive;
 
 /**
  * Puzzle 4: It's Elementary </br>
