@@ -18,55 +18,24 @@
 			expression="org.springframework.stereotype.Repository" />
 	</context:component-scan>
 
-	<!--用户服务5秒钟内访问数量的上限的存储器 -->
-	<bean id="userServerNumStore" class="${cache.service}" />
-	<bean id="baseService" class="com.ewezx.web.rest.service.EWBaseService" />
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location" value="classpath:/rock.properties" />
+		<property name="location" value="classpath:/matrix.properties" />
 	</bean>
 
-	<bean id="matrixProperties" class="com.ucfgroup.framework.core.RockProperties" />
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${jdbc.driverClass}"></property>
+		<property name="jdbcUrl" value="${jdbc.url}"></property>
+		<property name="user" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+	</bean>
 
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="dataSource" />
+	</bean>
 
-
-	<import resource="classpath:spring/spring_aop.xml" />
-
-	<!-- <import resource="classpath:spring/spring_mq.xml" /> -->
-
-	<!-- 加载定时任务 -->
-	<import resource="classpath:spring/spring_task.xml" />
-
-	<!-- 以下两个 xml 用于测试。不使用数据库保存与提供用户数据 -->
-	<!-- <import resource="classpath:spring/spring_security_test.xml" /> -->
-	<!-- <import resource="classpath:spring/spring_security_cas_test.xml" /> -->
-
-	<!-- 以下三个 xml 根据需要选择使用其中一个 -->
-	<import resource="classpath:spring/spring_security_jdbc.xml" />
-	<!-- <import resource="classpath:spring/spring_security_cas_with_jdbc.xml" 
-		/> -->
-	<!-- <import resource="classpath:spring/spring_security_oauth2_server.xml" 
-		/> -->
-
-	<!-- 数据库访问与事务(需要数据库时启用) -->
-	<import resource="classpath:spring/db_access.xml" />
-	<import resource="classpath:spring/transaction.xml" />
-
-	<!-- 启用第三方帐号登录，与 spring_security_jdbc.xml 或 spring_security_oauth2_server.xml 
-		一起使用 -->
-	<!-- <import resource="classpath:spring/spring_security_oauth2_client.xml" 
-		/> -->
-
-	<!-- 启用 OAuth2 Authorization Server，与 spring_security_oauth2_server.xml 
-		一起使用 -->
-	<!-- <import resource="classpath:spring/spring_security_oauth2_auth_server.xml" 
-		/> -->
-
-	<!-- 启用 OAuth2 Resource Server，与 spring_security_oauth2_server.xml 一起使用 -->
-	<!-- <import resource="classpath:spring/spring_security_oauth2_resource_server.xml" 
-		/> -->
-	<bean id="dataSourceManager" class="com.ewezx.ds.DataSourceManager">
-		<constructor-arg index="0" value="20" /><!-- 线程池数量 -->
-		<constructor-arg index="1" value="500" /><!-- 线程池数量 -->
+	<bean id="accountDao" class="com.matrix.dao.account.impl.AccountDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"></property>
 	</bean>
 </beans>

@@ -12,10 +12,10 @@ import com.matrix.dao.account.IAccountDao;
  * @date 2015年9月20日
  * @since 1.0
  */
-@Repository
 public class AccountDaoImpl extends JdbcDaoSupport implements IAccountDao {
 
 	public AccountDaoImpl() {
+		System.out.println("=================");
 		this.getJdbcTemplate();
 	}
 

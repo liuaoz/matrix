@@ -19,8 +19,6 @@ public abstract class BaseDao {
 	 */
 	final protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	// SqlMap sqlMap;
-
 	/**
 	 * 无参构造函数
 	 */
@@ -39,8 +37,5 @@ public abstract class BaseDao {
 		} else
 			return this.sqlSessionTemplate;
 	}
-	
-	
-	
-	
+
 }

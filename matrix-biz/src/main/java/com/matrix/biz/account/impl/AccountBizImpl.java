@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import com.matrix.biz.account.IAccountBiz;
 import com.matrix.dao.account.IAccountDao;
 
-@Service
 public class AccountBizImpl implements IAccountBiz {
 
 	@Autowired
