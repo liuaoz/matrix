@@ -1,7 +1,6 @@
 package com.matrix.dao.account.impl;
 
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-import org.springframework.stereotype.Repository;
 
 import com.matrix.dao.account.IAccountDao;
 

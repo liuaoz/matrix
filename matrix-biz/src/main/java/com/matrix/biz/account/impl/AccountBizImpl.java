@@ -1,7 +1,6 @@
 package com.matrix.biz.account.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.matrix.biz.account.IAccountBiz;
 import com.matrix.dao.account.IAccountDao;
