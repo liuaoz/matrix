@@ -11,136 +11,83 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @Description: ³õÊ¼»¯Ãô¸Ğ´Ê¿â£¬½«Ãô¸Ğ´Ê¼ÓÈëµ½HashMapÖĞ£¬¹¹½¨DFAËã·¨Ä£ĞÍ
- * @Project£ºtest
- * @Author : chenming
- * @Date £º 2014Äê4ÔÂ20ÈÕ ÏÂÎç2:27:06
+ * åŠŸèƒ½ï¼š
+ *
+ * @author matrix
  * @version 1.0
+ * @date 2016å¹´3æœˆ5æ—¥
  */
 public class SensitiveWordInit {
-	private String ENCODING = "GBK";    //×Ö·û±àÂë
+	private String ENCODING = "utf8";
 	@SuppressWarnings("rawtypes")
 	public HashMap sensitiveWordMap;
-	
-	public SensitiveWordInit(){
+
+	public SensitiveWordInit() {
 		super();
 	}
-	
-	/**
-	 * @author chenming 
-	 * @date 2014Äê4ÔÂ20ÈÕ ÏÂÎç2:28:32
-	 * @version 1.0
-	 */
+
 	@SuppressWarnings("rawtypes")
-	public Map initKeyWord(){
+	public Map initKeyWord() {
 		try {
-			//¶ÁÈ¡Ãô¸Ğ´Ê¿â
 			Set<String> keyWordSet = readSensitiveWordFile();
-			//½«Ãô¸Ğ´Ê¿â¼ÓÈëµ½HashMapÖĞ
 			addSensitiveWordToHashMap(keyWordSet);
-			//spring»ñÈ¡application£¬È»ºóapplication.setAttribute("sensitiveWordMap",sensitiveWordMap);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return sensitiveWordMap;
 	}
 
-	/**
-	 * ¶ÁÈ¡Ãô¸Ğ´Ê¿â£¬½«Ãô¸Ğ´Ê·ÅÈëHashSetÖĞ£¬¹¹½¨Ò»¸öDFAËã·¨Ä£ĞÍ£º<br>
-	 * ÖĞ = {
-	 *      isEnd = 0
-	 *      ¹ú = {<br>
-	 *      	 isEnd = 1
-	 *           ÈË = {isEnd = 0
-	 *                Ãñ = {isEnd = 1}
-	 *                }
-	 *           ÄĞ  = {
-	 *           	   isEnd = 0
-	 *           		ÈË = {
-	 *           			 isEnd = 1
-	 *           			}
-	 *           	}
-	 *           }
-	 *      }
-	 *  Îå = {
-	 *      isEnd = 0
-	 *      ĞÇ = {
-	 *      	isEnd = 0
-	 *      	ºì = {
-	 *              isEnd = 0
-	 *              Æì = {
-	 *                   isEnd = 1
-	 *                  }
-	 *              }
-	 *      	}
-	 *      }
-	 * @author chenming 
-	 * @date 2014Äê4ÔÂ20ÈÕ ÏÂÎç3:04:20
-	 * @param keyWordSet  Ãô¸Ğ´Ê¿â
-	 * @version 1.0
-	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void addSensitiveWordToHashMap(Set<String> keyWordSet) {
-		sensitiveWordMap = new HashMap(keyWordSet.size());     //³õÊ¼»¯Ãô¸Ğ´ÊÈİÆ÷£¬¼õÉÙÀ©Èİ²Ù×÷
-		String key = null;  
+		sensitiveWordMap = new HashMap(keyWordSet.size());
+		String key = null;
 		Map nowMap = null;
 		Map<String, String> newWorMap = null;
-		//µü´úkeyWordSet
 		Iterator<String> iterator = keyWordSet.iterator();
-		while(iterator.hasNext()){
-			key = iterator.next();    //¹Ø¼ü×Ö
+		while (iterator.hasNext()) {
+			key = iterator.next();
 			nowMap = sensitiveWordMap;
-			for(int i = 0 ; i < key.length() ; i++){
-				char keyChar = key.charAt(i);       //×ª»»³ÉcharĞÍ
-				Object wordMap = nowMap.get(keyChar);       //»ñÈ¡
-				
-				if(wordMap != null){        //Èç¹û´æÔÚ¸Ãkey£¬Ö±½Ó¸³Öµ
+			for (int i = 0; i < key.length(); i++) {
+				char keyChar = key.charAt(i);
+				Object wordMap = nowMap.get(keyChar);
+
+				if (wordMap != null) {
 					nowMap = (Map) wordMap;
-				}
-				else{     //²»´æÔÚÔò£¬Ôò¹¹½¨Ò»¸ömap£¬Í¬Ê±½«isEndÉèÖÃÎª0£¬ÒòÎªËû²»ÊÇ×îºóÒ»¸ö
-					newWorMap = new HashMap<String,String>();
-					newWorMap.put("isEnd", "0");     //²»ÊÇ×îºóÒ»¸ö
+				} else {
+					newWorMap = new HashMap<String, String>();
+					newWorMap.put("isEnd", "0");
 					nowMap.put(keyChar, newWorMap);
 					nowMap = newWorMap;
 				}
-				
-				if(i == key.length() - 1){
-					nowMap.put("isEnd", "1");    //×îºóÒ»¸ö
+
+				if (i == key.length() - 1) {
+					nowMap.put("isEnd", "1");
 				}
 			}
 		}
 	}
 
-	/**
-	 * ¶ÁÈ¡Ãô¸Ğ´Ê¿âÖĞµÄÄÚÈİ£¬½«ÄÚÈİÌí¼Óµ½set¼¯ºÏÖĞ
-	 * @author chenming 
-	 * @date 2014Äê4ÔÂ20ÈÕ ÏÂÎç2:31:18
-	 * @return
-	 * @version 1.0
-	 * @throws Exception 
-	 */
 	@SuppressWarnings("resource")
-	private Set<String> readSensitiveWordFile() throws Exception{
+	private Set<String> readSensitiveWordFile() throws Exception {
 		Set<String> set = null;
-		
-		File file = new File("D:\\SensitiveWord.txt");    //¶ÁÈ¡ÎÄ¼ş
-		InputStreamReader read = new InputStreamReader(new FileInputStream(file),ENCODING);
+
+		File file = new File("D:\\SensitiveWord.txt");
+		InputStreamReader read = new InputStreamReader(new FileInputStream(file), ENCODING);
 		try {
-			if(file.isFile() && file.exists()){      //ÎÄ¼şÁ÷ÊÇ·ñ´æÔÚ
+			if (file.isFile() && file.exists()) {
 				set = new HashSet<String>();
 				BufferedReader bufferedReader = new BufferedReader(read);
 				String txt = null;
-				while((txt = bufferedReader.readLine()) != null){    //¶ÁÈ¡ÎÄ¼ş£¬½«ÎÄ¼şÄÚÈİ·ÅÈëµ½setÖĞ
+				while ((txt = bufferedReader.readLine()) != null) {
 					set.add(txt);
-			    }
-			}
-			else{         //²»´æÔÚÅ×³öÒì³£ĞÅÏ¢
-				throw new Exception("Ãô¸Ğ´Ê¿âÎÄ¼ş²»´æÔÚ");
+				}
+			} else {
+				throw new Exception("xxx");
 			}
 		} catch (Exception e) {
 			throw e;
-		}finally{
-			read.close();     //¹Ø±ÕÎÄ¼şÁ÷
+		} finally {
+			read.close();
 		}
 		return set;
 	}
