@@ -8,8 +8,8 @@
 		<artifactId>matrix</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>com.matrix.test</groupId>
-	<artifactId>matrix-test</artifactId>
-	<name>Archetype - matrix-test</name>
+	<groupId>com.matrix.demo</groupId>
+	<artifactId>matrix-demo</artifactId>
+	<name>Archetype - matrix-demo</name>
 	<url>http://maven.apache.org</url>
 </project>

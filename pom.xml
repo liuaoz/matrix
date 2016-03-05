@@ -187,10 +187,10 @@
 	<modules>
 		<module>matrix-action</module>
 		<module>matrix-biz</module>
-		<module>matrix-bo</module>
 		<module>matrix-dao</module>
 		<module>matrix-entry</module>
 		<module>matrix-comm</module>
-		<module>matrix-test</module>
+		<module>matrix-demo</module>
+		<module>matrix-redis</module>
 	</modules>
 </project>
