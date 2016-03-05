@@ -10,11 +10,16 @@ import java.sql.Timestamp;
  * @since 1.0
  */
 public abstract class BaseEntry {
+	
+	/**
+	 * 主鍵
+	 */
+	private long id;
 
 	/**
 	 * 操作人
 	 */
-	private String operater;
+	private String userCode;
 
 	/**
 	 * 创建时间
@@ -31,12 +36,20 @@ public abstract class BaseEntry {
 	 */
 	private int version;
 
-	public String getOperater() {
-		return operater;
+	public long getId() {
+		return id;
 	}
 
-	public void setOperater(String operater) {
-		this.operater = operater;
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getUserCode() {
+		return userCode;
+	}
+
+	public void setUserCode(String userCode) {
+		this.userCode = userCode;
 	}
 
 	public Timestamp getCreateTime() {

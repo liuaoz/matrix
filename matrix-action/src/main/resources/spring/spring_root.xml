@@ -35,7 +35,16 @@
 		<constructor-arg ref="dataSource" />
 	</bean>
 
-	<bean id="accountDao" class="com.matrix.dao.account.impl.AccountDaoImpl">
-		<property name="jdbcTemplate" ref="jdbcTemplate"></property>
+	<!-- 集成MyBatis -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:/mybatis/mybatis_config.xml" />
+		<property name="mapperLocations" value="classpath:/mybatis/mappers/*.xml" />
 	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
 </beans>
