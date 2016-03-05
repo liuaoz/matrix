@@ -193,5 +193,7 @@
 		<module>matrix-comm</module>
 		<module>matrix-demo</module>
 		<module>matrix-redis</module>
+		<module>matrix-core</module>
+		<module>matrix-util</module>
 	</modules>
 </project>

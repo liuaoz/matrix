@@ -8,8 +8,9 @@
 		<artifactId>matrix</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>com.matrix.redis</groupId>
-	<artifactId>matrix-redis</artifactId>
-	<name>Archetype - matrix-redis</name>
+	<groupId>com.matrix.core</groupId>
+	<artifactId>matrix-core</artifactId>
+	<name>Archetype - matrix-core</name>
 	<url>http://maven.apache.org</url>
+
 </project>
