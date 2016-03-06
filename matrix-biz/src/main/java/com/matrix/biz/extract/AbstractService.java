@@ -8,12 +8,7 @@ package com.matrix.biz.extract;
  * @param <T>
  * @date 2016年3月1日
  */
-public abstract class AbstractService<T> {
-
-	/**
-	 * 取数结果
-	 */
-	private T retObj;
+public abstract class AbstractService {
 
 	/**
 	 * 初始化状态。设置是否从数据源取数
@@ -63,14 +58,6 @@ public abstract class AbstractService<T> {
 			getDataFromLocal();
 		}
 
-	}
-
-	public T getRetObj() {
-		return retObj;
-	}
-
-	public void setRetObj(T retObj) {
-		this.retObj = retObj;
 	}
 
 }

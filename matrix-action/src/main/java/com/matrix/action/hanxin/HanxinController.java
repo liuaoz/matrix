@@ -21,7 +21,7 @@ public class HanxinController {
 	@Resource(name = "hxNameCidCheckBizImpl")
 	private HxNameCidCheckBizImpl checkBizImpl;
 
-	@RequestMapping("name_cid_check")
+	@RequestMapping("/hx/name_cid_check")
 	@ResponseBody
 	public Object checkNameCid() {
 		return checkBizImpl.getNameCidEntryByCid();
