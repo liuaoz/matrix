@@ -5,7 +5,6 @@ package com.matrix.biz.extract;
  * 
  * @author matrix
  * @version 1.0
- * @param <T>
  * @date 2016年3月1日
  */
 public abstract class AbstractService {

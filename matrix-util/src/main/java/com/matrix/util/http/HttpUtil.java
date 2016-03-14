@@ -1,6 +1,5 @@
 package com.matrix.util.http;
 
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -12,7 +11,15 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
+
+import org.apache.http.Consts;
+
+import com.matrix.util.httpclient.SendAuthReqUtil;
 
 /**
  * 功能：http请求工具类
@@ -200,8 +207,52 @@ public class HttpUtil {
 		return result;
 	}
 
-	@SuppressWarnings("deprecation")
 	public static void main(String[] args) {
+
+		String name = "马富";
+		String cid = "132623195510113015";
+		String manz_url = "http://139.196.195.95:8080/api/authenInfoApi.htm";
+		String manz_userId = "100272";
+		String manz_mkey = "Y55153lL5x1T55593x7NG5l13171597d";
+		String manz_des = "9t79Q7p79UF39L7t99IAY1xsr577xbA1";
+		
+		SendAuthReqUtil.strDefaultKey = manz_des;
+		String nameDes = SendAuthReqUtil.Encode(name);
+		String cidDes = SendAuthReqUtil.Encode(cid);
+
+		String ts = String.valueOf(System.currentTimeMillis());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+		
+
+		String md5Str = null;
+		try {
+			md5Str = Md5Util
+					.md5Sign("userId" + manz_userId + "auName" + name + "auId" + cid + "ts" + ts + manz_mkey);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+
+		
+
+		Map<String, String> params = new HashMap<String, String>();
+
+		params.put("userId", manz_userId);
+		params.put("auName", nameDes);
+		params.put("auId", cidDes);
+		params.put("reqDate", sdf.format(new Date()));
+		params.put("ts", ts);
+		params.put("sign", md5Str);
+		params.put("authType", "01");// 01：实名认证，02：人证合一，03：银行卡认证
+		params.put("resType", "Json"); // Json/xml
+
+		String result = HttpUtil.sendPost(manz_url, params, Consts.UTF_8.toString());
+		System.out.println(result);
+
+	}
+
+	@SuppressWarnings("deprecation")
+	public static void test(String[] args) {
 
 		FileInputStream fis = null;
 		InputStreamReader isr = null;
@@ -211,28 +262,32 @@ public class HttpUtil {
 		String str = "";
 
 		try {
-			fis = new FileInputStream("E:\\tmp.out1");
+			fis = new FileInputStream("E:\\yixun.txt");
 			isr = new InputStreamReader(fis);
 			br = new BufferedReader(isr);
 
 			while ((str = br.readLine()) != null) {
 				String[] arr = str.split("\t");
 				String cid = arr[1];
-				String name = arr[2];
+				String name = arr[0];
 
 				name = java.net.URLEncoder.encode(name);
 				String url = "http://192.168.1.60:8080/ucf-webapp/api/ew_identity_photo_check/" + name + "/" + cid
 						+ "/btof/a12345678/";
-				System.out.println(url);
+				// String url =
+				// "http://192.168.1.60:8080/ucf-webapp/api/ylz_cid_queryWageGrade_api/"
+				// + cid
+				// + "/btof/a12345678/";
+				// System.out.println(url);
 
 				String output = sendGet(url, "utf-8");
 
-				System.out.println(output);
+				// System.out.println(output);
 
-				String aline = "cid-" + cid + " name:" + arr[2] + "==" + output+"\n";
+				String aline = "cid-" + cid + ",name-" + arr[0] + "==" + output + "\n";
 
-				bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("E:\\result.txt", false)));
-
+				bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("E:\\yixun_result.txt", true)));
+				System.out.println(aline);
 				bw.write(aline);
 				bw.flush();
 
