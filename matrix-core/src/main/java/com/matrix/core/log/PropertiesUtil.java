@@ -1,3 +1,4 @@
+package com.matrix.core.log;
 
 
 import java.io.InputStream;

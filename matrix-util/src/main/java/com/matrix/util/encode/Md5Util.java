@@ -1,4 +1,4 @@
-package com.matrix.util.http;
+package com.matrix.util.encode;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

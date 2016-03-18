@@ -1,8 +1,15 @@
-
+package com.matrix.core.log;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 功能：日志管理器
+ *
+ * @author matrix
+ * @version 1.0
+ * @date 2016年3月7日
+ */
 public class Log {
 
 	private Logger logger;

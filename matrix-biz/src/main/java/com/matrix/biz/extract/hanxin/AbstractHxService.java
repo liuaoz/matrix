@@ -1,6 +1,9 @@
 package com.matrix.biz.extract.hanxin;
 
-import com.matrix.biz.extract.AbstractService;
+import java.util.List;
+
+import com.matrix.biz.extract.AbstractDataSource;
+import com.matrix.bo.extract.hanxin.HanxinBaseBo;
 
 /**
  * 功能：数据源-韩鑫父类
@@ -9,12 +12,12 @@ import com.matrix.biz.extract.AbstractService;
  * @version 1.0
  * @date 2016年2月27日
  */
-public class AbstractHxService extends AbstractService {
+public class AbstractHxService extends AbstractDataSource<HanxinBaseBo> {
 
 	@Override
 	public void init() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -24,7 +27,7 @@ public class AbstractHxService extends AbstractService {
 	}
 
 	@Override
-	public <E> E getDataFromLocal() {
+	public Object getDataFromLocal() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -36,7 +39,7 @@ public class AbstractHxService extends AbstractService {
 	}
 
 	@Override
-	public <E> E getDataFromRemote() {
+	public List getDataFromRemote() {
 		// TODO Auto-generated method stub
 		return null;
 	}

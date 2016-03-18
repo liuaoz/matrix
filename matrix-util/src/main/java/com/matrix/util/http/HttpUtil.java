@@ -19,6 +19,7 @@ import java.util.Map;
 
 import org.apache.http.Consts;
 
+import com.matrix.util.encode.Md5Util;
 import com.matrix.util.httpclient.SendAuthReqUtil;
 
 /**

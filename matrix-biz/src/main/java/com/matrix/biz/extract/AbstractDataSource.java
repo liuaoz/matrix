@@ -1,5 +1,9 @@
 package com.matrix.biz.extract;
 
+import java.util.List;
+
+import com.matrix.bo.BaseBo;
+
 /**
  * 功能：数据源取数抽象类，控制取数流程
  * 
@@ -7,10 +11,10 @@ package com.matrix.biz.extract;
  * @version 1.0
  * @date 2016年3月1日
  */
-public abstract class AbstractService {
+public abstract class AbstractDataSource<T extends BaseBo> {
 
 	/**
-	 * 初始化状态。设置是否从数据源取数
+	 * 初始化状态
 	 */
 	public abstract void init();
 
@@ -26,7 +30,7 @@ public abstract class AbstractService {
 	 * 
 	 * @return
 	 */
-	public abstract <E> E getDataFromLocal();
+	public abstract Object getDataFromLocal();
 
 	/**
 	 * 本地是否有满足条件的数据
@@ -40,7 +44,7 @@ public abstract class AbstractService {
 	 * 
 	 * @return
 	 */
-	public abstract <E> E getDataFromRemote();
+	public abstract List<T> getDataFromRemote();
 
 	/**
 	 * 获取数据

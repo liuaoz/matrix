@@ -3,14 +3,14 @@ package com.matrix.entry;
 import java.sql.Timestamp;
 
 /**
- * 实体抽象父类
+ * 数据层抽象实体父类
  * 
  * @author matrix
  * @date 2015年9月20日
  * @since 1.0
  */
 public abstract class BaseEntry {
-	
+
 	/**
 	 * 主鍵
 	 */
