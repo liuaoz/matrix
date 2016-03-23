@@ -23,9 +23,9 @@ public class Mail {
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.host", "smtp.163.com");
 		// 发件人的账号
-		props.put("mail.user", "cxx534@163.com");
+		props.put("mail.user", "test@163.com");
 		// 访问SMTP服务时需要提供的密码
-		props.put("mail.password", "wangyi,nihao!");
+		props.put("mail.password", "aalsfsj,ni3hsewsao!");
 
 		// 构建授权信息，用于进行SMTP进行身份验证
 		Authenticator authenticator = new Authenticator() {
@@ -50,7 +50,7 @@ public class Mail {
 		message.setRecipient(RecipientType.TO, to);
 
 		// 设置抄送
-		InternetAddress cc = new InternetAddress("cxx534@163.com");
+		InternetAddress cc = new InternetAddress("test@163.com");
 		message.setRecipient(RecipientType.CC, cc);
 
 		// 设置密送，其他的收件人不能看到密送的邮件地址

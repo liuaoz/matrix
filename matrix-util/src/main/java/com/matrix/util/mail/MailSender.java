@@ -23,11 +23,11 @@ public class MailSender {
 	/**
 	 * 默认服务器邮件发送人邮箱
 	 */
-	private static String ACCOUNT_OF_SENDER = "cxx534@163.com";
+	private static String ACCOUNT_OF_SENDER = "test@163.com";
 	/**
 	 * 默认服务器邮件发送人密码
 	 */
-	private static String PASSWORD_OF_SENDER = "wangyi,nihao!";
+	private static String PASSWORD_OF_SENDER = "iloveyoualloverthewolrd";
 
 	/**
 	 * 配置发送邮件的环境属性
@@ -131,7 +131,7 @@ public class MailSender {
 	}
 
 	public static void main(String[] args) throws MessagingException {
-		send("576729125@qq.com", null, null, "subject aaa", "content and content");
+		send("test@qq.com", null, null, "subject aaa", "content and content");
 	}
 
 }
