@@ -11,44 +11,61 @@
 	<!-- 真正可以产生Connection的ConnectionFactory，由对应的 JMS服务厂商提供 -->
 	<bean id="targetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
 		<property name="brokerURL" value="${mq.brokerURL}" />
-		<property name="username" value="${mq.username}" />
+		<property name="userName" value="${mq.userName}" />
 		<property name="password" value="${mq.password}" />
 	</bean>
 
+	<!-- mq连接池工厂 -->
 	<bean id="pooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory">
 		<property name="connectionFactory" ref="targetConnectionFactory" />
 		<property name="maxConnections" value="${mq.pool.maxConnections}" />
-		<property name="maximumActive" value="${mq.pool.maximumActive}" />
 	</bean>
 
 	<!-- Spring用于真正管理connectionFactory的ConnectionFactory -->
-	<bean id="mqconnectionFactory"
+	<bean id="connectionFactory"
 		class="org.springframework.jms.connection.SingleConnectionFactory">
 		<property name="targetConnectionFactory" ref="pooledConnectionFactory" />
 		<property name="reconnectOnException" value="true" />
 	</bean>
+
+	<!-- 队列模板 -->
+	<bean id="activeMqJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="defaultDestinationName" value="queueName" />
+	</bean>
+
 	<!-- Spring提供的JMS工具类，它可以进行消息发送、接收等 -->
 	<bean id="topicJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
 		<!-- 这个connectionFactory对应的是我们定义的Spring提供的那个ConnectionFactory对象 -->
-		<property name="connectionFactory" ref="mqconnectionFactory" />
+		<property name="connectionFactory" ref="connectionFactory" />
 		<property name="pubSubDomain" value="true" />
 		<property name="receiveTimeout" value="3000" />
 	</bean>
+
 	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
 		<!-- 这个connectionFactory对应的是我们定义的Spring提供的那个ConnectionFactory对象 -->
-		<property name="connectionFactory" ref="mqconnectionFactory" />
+		<property name="connectionFactory" ref="connectionFactory" />
 		<property name="receiveTimeout" value="3000" />
 		<property name="sessionAcknowledgeMode" value="1" />
 	</bean>
 
-
-	<!-- 商户通知队列模板 -->
-	<bean id="notifyJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
-		<property name="connectionFactory" ref="mqconnectionFactory" />
-		<!-- 目标队列 -->
-		<property name="defaultDestinationName" value="${queueName.notify}" />
+<!--
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${mail.host}" />
+		<property name="port" value="${mail.port}" />
+		<property name="username" value="${mail.username}" />
+		<property name="password" value="${mail.password}" />
+		<property name="javaMailProperties">
+			<props key="mail.smtp.auth">
+				true
+			</props>
+			<props key="mail.smtp.starttls.enable">
+				true
+			</props>
+			<props key="mail.smtp.auth.ntlm.domain">
+				DOMAIN
+			</props>
+		</property>
 	</bean>
-
-
-
+-->
 </beans>

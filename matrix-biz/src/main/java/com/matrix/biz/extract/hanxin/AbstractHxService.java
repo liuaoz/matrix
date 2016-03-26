@@ -39,7 +39,7 @@ public class AbstractHxService extends AbstractDataSource<HanxinBaseBo> {
 	}
 
 	@Override
-	public List getDataFromRemote() {
+	public List<HanxinBaseBo> getDataFromRemote() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,7 +1,5 @@
 package com.matrix.dao.extract.hanxin;
 
-import org.springframework.stereotype.Repository;
-
 import com.matrix.dao.impl.BaseDaoImpl;
 import com.matrix.entry.extract.hanxin.HanxinNameCidEntry;
 
@@ -12,7 +10,6 @@ import com.matrix.entry.extract.hanxin.HanxinNameCidEntry;
  * @version 1.0
  * @date 2016年3月5日
  */
-@Repository("hanXinDaoImpl")
 public class HanXinDaoImpl extends BaseDaoImpl implements IHanXinDao {
 
 	@Override

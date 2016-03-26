@@ -22,7 +22,14 @@
 
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location" value="classpath:/matrix.properties" />
+		<property name="locations">
+			<list>
+				<value>classpath:/matrix.properties</value>
+				<value>classpath:/mq.properties</value>
+				<value>classpath:/jdbc.properties</value>
+			</list>
+		</property>
+		<!-- <property name="location" value="classpath:/matrix.properties" /> -->
 	</bean>
 
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
@@ -37,12 +44,6 @@
 		<constructor-arg ref="dataSource" />
 	</bean>
 
-	<!-- 集成MyBatis -->
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<property name="configLocation" value="classpath:/mybatis/mybatis_config.xml" />
-		<property name="mapperLocations" value="classpath:/mybatis/mappers/*.xml" />
-	</bean>
 
 	<bean id="txManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -53,5 +54,11 @@
 		如果proxy-target-class属值被设置为false或者这个属性被省略，那么标准的JDK 基于接口的代理将起作用。 -->
 	<tx:annotation-driven transaction-manager="txManager"
 		proxy-target-class="true" />
+
+	<!-- 导入mq配置文件 -->
+	<import resource="spring_mq.xml" />
+
+	<!-- 导入mybatis配置文件 -->
+	<import resource="spring_mybatis.xml" />
 
 </beans>
