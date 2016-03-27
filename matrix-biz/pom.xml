@@ -19,7 +19,11 @@
 			<artifactId>matrix-dao</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>com.matrix.core</groupId>
+			<artifactId>matrix-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>com.matrix.bo</groupId>
 			<artifactId>matrix-bo</artifactId>

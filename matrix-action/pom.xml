@@ -20,6 +20,12 @@
 			<artifactId>matrix-biz</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.matrix.core</groupId>
+			<artifactId>matrix-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>

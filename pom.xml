@@ -257,5 +257,7 @@
 		<module>matrix-core</module>
 		<module>matrix-util</module>
 		<module>matrix-bo</module>
+		<module>matrix-provider</module>
+		<module>matrix-consumer</module>
 	</modules>
 </project>

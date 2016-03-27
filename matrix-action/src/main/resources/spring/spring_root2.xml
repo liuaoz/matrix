@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		   http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		   http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		   http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+		   http://www.springframework.org/schema/tx  http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+
+	<!-- 采用注释的方式配置bean -->
+	<context:annotation-config />
+
+
+
+	<!-- 定义扫描根路径为com.matrix，不使用默认的扫描方式 -->
+	<context:component-scan base-package="com.matrix"
+		use-default-filters="false">
+		<!-- 扫描符合 @Service @Repository 的类 -->
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Service" />
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Repository" />
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+	<!-- 使用CGLib动态代理 -->
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+
+	<!-- 属性文件加载 -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:/matrix.properties</value>
+				<value>classpath:/mq.properties</value>
+				<value>classpath:/jdbc.properties</value>
+			</list>
+		</property>
+		<!-- <property name="location" value="classpath:/matrix.properties" /> -->
+	</bean>
+
+	<!-- 配置线程池 -->
+	<bean id="threadPool"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<!-- 线程池维护线程的最少数量 -->
+		<property name="corePoolSize" value="5" />
+		<!-- 线程池维护线程所允许的空闲时间 -->
+		<property name="keepAliveSeconds" value="30000" />
+		<!-- 线程池维护线程的最大数量 -->
+		<property name="maxPoolSize" value="50" />
+		<!-- 线程池所使用的缓存队列 -->
+		<property name="queueCapacity" value="100" />
+	</bean>
+
+	<!-- 数据源 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${jdbc.driverClass}"></property>
+		<property name="jdbcUrl" value="${jdbc.url}"></property>
+		<property name="user" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+	</bean>
+
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="dataSource" />
+	</bean>
+
+	<!-- 真正可以产生Connection的ConnectionFactory，由对应的 JMS服务厂商提供 -->
+	<bean id="targetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<property name="brokerURL" value="${mq.brokerURL}" />
+		<property name="userName" value="${mq.userName}" />
+		<property name="password" value="${mq.password}" />
+	</bean>
+
+	<!-- mq连接池工厂 -->
+	<bean id="pooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory">
+		<property name="connectionFactory" ref="targetConnectionFactory" />
+		<property name="maxConnections" value="${mq.pool.maxConnections}" />
+	</bean>
+
+	<!-- Spring用于真正管理connectionFactory的ConnectionFactory -->
+	<bean id="connectionFactory"
+		class="org.springframework.jms.connection.SingleConnectionFactory">
+		<property name="targetConnectionFactory" ref="pooledConnectionFactory" />
+		<!-- <property name="reconnectOnException" value="true" /> -->
+	</bean>
+
+	<!-- 队列模板 -->
+	<bean id="activeMqJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="defaultDestinationName" value="${queueName}" />
+	</bean>
+
+
+	<!-- Spring提供的发送电子邮件的高级抽象类 -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${email.host}" />
+		<property name="port" value="${email.port}" />
+		<property name="username" value="${email.username}" />
+		<property name="password" value="${email.password}" />
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">${email.smtp.auth}</prop>
+				<prop key="mail.smtp.timeout">${email.smtp.timeout}</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="simpleMailMessage" class="org.springframework.mail.SimpleMailMessage">
+		<property name="from">
+			<value>${email.default.from}</value>
+		</property>
+	</bean>
+
+	<!-- 这个是sessionAwareQueue的目的地 -->
+	<bean id="sessionAwareQueue" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg>
+			<value>${queueName}</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- 可以获取session的MessageListener自定义监听器 -->
+	<bean id="consumerSessionAwareMessageListener"
+		class="com.matrix.action.activemq.listener.ConsumerSessionAwareMessageListener">
+
+	</bean>
+
+	<bean id="sessionAwareListenerContainer"
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="sessionAwareQueue" />
+		<property name="messageListener" ref="consumerSessionAwareMessageListener" />
+	</bean>
+
+</beans>
