@@ -9,7 +9,6 @@ import java.security.cert.X509Certificate;
 
 import javax.net.ssl.SSLContext;
 
-import org.apache.http.client.config.RequestConfig;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
@@ -45,6 +44,7 @@ public class HttpClientUtil {
 
 	private static CloseableHttpClient httpClient = null;
 
+	@SuppressWarnings("unused")
 	private static CloseableHttpClient getHttpClient() {
 
 		if (httpClient != null) {

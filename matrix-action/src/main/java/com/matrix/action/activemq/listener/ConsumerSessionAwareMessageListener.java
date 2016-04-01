@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 import org.springframework.jms.listener.SessionAwareMessageListener;
-import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.matrix.biz.email.IEmailBiz;
