@@ -12,4 +12,11 @@
 	<artifactId>matrix-redis</artifactId>
 	<name>Archetype - matrix-redis</name>
 	<url>http://maven.apache.org</url>
+
+	<dependencies>
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+		</dependency>
+	</dependencies>
 </project>

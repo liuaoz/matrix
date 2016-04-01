@@ -13,4 +13,11 @@
 	<name>Archetype - matrix-core</name>
 	<url>http://maven.apache.org</url>
 
+	<dependencies>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+	</dependencies>
+
 </project>
