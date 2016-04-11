@@ -16,7 +16,7 @@ public class RedisUtil {
 	/**
 	 * Redis服务器地址
 	 */
-	private static String IP = "";
+	private static String IP = "192.168.1.118";
 
 	/**
 	 * Redis的端口号
