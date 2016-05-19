@@ -1,33 +1,40 @@
 package exception;
 
 public class ExceptionDemo {
-	
+
 	public static void main(String[] args) {
-		isTrue(false);
-		System.out.println("a");
-		
+		m2();
 	}
-	
-	
-	public static boolean isTrue(boolean flag){
-		if(flag){
-			return flag;
-		}else{
-			throw new TestException();
-		}
-		
+
+	public static void m1() {
+		throw new RunException("aaa");
+	}
+
+	public static void m2() {
+		m1();
 	}
 
 }
 
-
-class TestException extends RuntimeException{
+class RunException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
-	
-	public TestException() {
-		
+
+	public RunException() {
+
 	}
-	
-	
+
+	public RunException(String message) {
+		super(message);
+	}
+
+}
+
+class CheckException extends Exception {
+
+	private static final long serialVersionUID = 1L;
+
+	public CheckException() {
+	}
+
 }
